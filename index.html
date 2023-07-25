@@ -105,9 +105,9 @@
         event.preventDefault();
 
         const inputElements = document.getElementsByClassName('form-control');
-        console.log(inputElements);
+        
 
-
+        // Validation
         let isValid = true;
             for (let i = 0; i < inputElements.length; i++) {
                 const inputValue = inputElements[i].value;
@@ -123,21 +123,23 @@
                 // Do not proceed with calculations or form submission
                 return;
             }
+
 		// total share of each field
         const rowMultiplications = [];
             for (let i = 0; i < inputElements.length; i += 2) {
                 const value1 = parseFloat(inputElements[i].value);
                 const value2 = parseFloat(inputElements[i + 1].value);
                 const multiplicationResult = value1 * value2;
-                console.log(multiplicationResult);
+                
                 rowMultiplications.push(multiplicationResult);
             }
+
 		// total Quantity
         const quantity = document.getElementsByClassName('field1');
-    	let num = 0;
+    	let totalQ = 0;
         for(let i = 0; i < quantity.length; i++){
         	const val = parseFloat(quantity[i].value);
-        	num = num + val;
+        	totalQ = totalQ + val;
         }
 
 		// Calculating the average of all stocks
@@ -146,11 +148,21 @@
         		sum = sum + rowMultiplications[i];
         	}
 
-        	var avg = sum/num;
-        	console.log(avg);
+        	var avg = sum/totalQ;
+        	// console.log(avg);
 
-        	document.getElementById("totalShare").innerHTML = num;
+        	document.getElementById("totalShare").innerHTML = totalQ;
         	document.getElementById("avgCost").innerHTML = avg;
+
+        // Profit and Loss Calculation
+        var cp = totalQ * avg;
+        console.log(cp);
+
+        // let sp = quantity * ;
+      
+
+
+
         });
 
         
@@ -160,18 +172,18 @@
 	<div class="container" style="background-color: rgb(218, 219, 224);">
 		<div class="col" style="background-color:rgb(79, 106, 240); color: white;">Stock Average Calculator Results</div>
 		<div class="row">
-			<div class="col-6"><b>Total Shares</b></div>
-			<div class="col-6"><b>Average Cost</b></div>
+			<div class="col-4"><b>Total Shares</b></div>
+			<div class="col-4"><b>Average Cost per Share</b></div>
+			<div class="col-4"><b>Profit Or Loss</b></div>
 		</div>
 		<div class="row">
-			<div class="col-6" id="totalShare"></div>
-			<div class="col-6" id="avgCost"></div>
+			<div class="col-4" id="totalShare"></div>
+			<div class="col-4" id="avgCost"></div>
+			<div class="col-4" id="profitOrLoss"></div>
 		</div>
 	</div>
 
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
-></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 </body>
 </html>
