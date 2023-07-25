@@ -15,11 +15,18 @@
 			padding: 10px;
 
 		}
-
+		.green
+		{
+			color: rgb(29, 245, 105);
+		}
+		.red
+		{
+			color: rgb(235, 64, 52);
+		}
 	</style>
 </head>
 <body>
-	<div class="container" id="inputs" style="background-color: rgb(218, 219, 224);">
+	<div class="container" id="inputs" style="background-color: rgb(225, 230, 227);">
 		<div align="center" style="background-color:rgb(79, 106, 240); color:white;">Average Down Calculator</div>
 		<div class="row">
 			<div class="col-6"><b>Shares Bought</b></div>
@@ -105,7 +112,8 @@
         event.preventDefault();
 
         const inputElements = document.getElementsByClassName('form-control');
-        
+        let size = inputElements.length;
+        console.log(size);
 
         // Validation
         let isValid = true;
@@ -151,15 +159,29 @@
         	var avg = sum/totalQ;
         	// console.log(avg);
 
-        	document.getElementById("totalShare").innerHTML = totalQ;
-        	document.getElementById("avgCost").innerHTML = avg;
+        	document.getElementById("totalShare").innerText = totalQ;
+        	document.getElementById("avgCost").innerText = avg;
 
-        // Profit and Loss Calculation
+        
+        // Buying Price Calculation
         var cp = totalQ * avg;
-        console.log(cp);
+        // last price
+        var lastPrice = inputElements[size-1].value;
+   		// selling Price Calculation
+		var sp = totalQ * lastPrice;
 
-        // let sp = quantity * ;
-      
+		// Profit Or Loss Calculation
+
+		var profitLoss = sp - cp;
+		console.log(profitLoss);
+		
+		if(profitLoss > 0){
+			document.getElementById("profitOrLoss").innerHTML = `<span class="green"><strong>Profit : ${profitLoss}</strong></span>`;
+		} else if(profitLoss < 0){
+			document.getElementById("profitOrLoss").innerHTML = `<span class="red"><strong>Loss : ${profitLoss}</strong></span>`;
+		} else {
+			document.getElementById("profitOrLoss").innerText = "No Profit Or Loss";
+		}
 
 
 
@@ -169,7 +191,7 @@
 	</script>
 
 
-	<div class="container" style="background-color: rgb(218, 219, 224);">
+	<div class="container" style="background-color: rgb(225, 230, 227);">
 		<div class="col" style="background-color:rgb(79, 106, 240); color: white;">Stock Average Calculator Results</div>
 		<div class="row">
 			<div class="col-4"><b>Total Shares</b></div>
