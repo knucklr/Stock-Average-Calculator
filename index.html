@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Stock Average Calculator</title>
+	<link rel="stylesheet" type="text/css" href="../ClassJspider/MDB/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="ClassJspider/MDB/css/mdb.css">
+	<style>
+		.form-control
+		{
+			width: 200px;
+		}
+		.container>div
+		{
+			padding: 10px;
+
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container" id="inputs" style="background-color: rgb(218, 219, 224);">
+		<div align="center" style="background-color:rgb(79, 106, 240); color:white;">Average Down Calculator</div>
+		<div class="row">
+			<div class="col-6"><b>Shares Bought</b></div>
+			<div class="col-6"><b>Purchase Price</b></div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<input type="text" name="inputField" class="form-control field1">	
+				<div class="error" id="inputsErr"></div>
+			</div>
+			<div class="col-6">
+				<input type="text" name="inputField" class="form-control ">	
+				<div class="error" id="inputsErr"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<input type="text" name="inputField" class="form-control field1">
+				<div class="error" id="inputErr1"></div>	
+			</div>
+			<div class="col-6">
+				<input type="text" name="inputField" class="form-control">
+				<div class="error" id="inputErr2"></div>	
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<button id="addButton" class="btn btn-primary">Add Row</button>
+			</div>
+			<div class="col-6">
+				<button id="result" class="btn btn-primary">Calculate</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function addInputBoxes() {
+			
+			const newRow = document.createElement('div');
+            newRow.classList.add('row');
+
+            const col1 = document.createElement('div');
+            col1.classList.add('col-6');
+
+            const col2 = document.createElement('div');
+            col2.classList.add('col-6');
+
+            const col3 = document.createElement('div');
+            col3.classList.add('col-6');
+           
+
+            const col4 = document.createElement('div');
+            col4.classList.add('col-6');
+           
+
+            const input1 = document.createElement('input');
+            input1.type = 'text';
+            input1.classList.add('form-control', 'field1');
+
+            const input2 = document.createElement('input');
+            input2.type = 'text';
+            input2.classList.add('form-control');
+            
+            col1.appendChild(input1);
+            col2.appendChild(input2);
+            newRow.appendChild(col1);
+            newRow.appendChild(col2);
+            newRow.appendChild(col3);
+            newRow.appendChild(col4);
+
+            document.querySelector('.container').appendChild(newRow);
+		}
+
+		const addButton = document.getElementById("addButton");
+        addButton.addEventListener("click", addInputBoxes);
+
+        const result = document.getElementById('result');
+        result.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const inputElements = document.getElementsByClassName('form-control');
+        console.log(inputElements);
+
+
+        let isValid = true;
+            for (let i = 0; i < inputElements.length; i++) {
+                const inputValue = inputElements[i].value;
+                if (inputValue.trim() === '' || isNaN(parseFloat(inputValue))) {
+                    isValid = false;
+                    inputElements[i].classList.add('is-invalid');
+                } else {
+                    inputElements[i].classList.remove('is-invalid');
+                }
+            }
+
+            if (!isValid) {
+                // Do not proceed with calculations or form submission
+                return;
+            }
+		// total share of each field
+        const rowMultiplications = [];
+            for (let i = 0; i < inputElements.length; i += 2) {
+                const value1 = parseFloat(inputElements[i].value);
+                const value2 = parseFloat(inputElements[i + 1].value);
+                const multiplicationResult = value1 * value2;
+                console.log(multiplicationResult);
+                rowMultiplications.push(multiplicationResult);
+            }
+		// total Quantity
+        const quantity = document.getElementsByClassName('field1');
+    	let num = 0;
+        for(let i = 0; i < quantity.length; i++){
+        	const val = parseFloat(quantity[i].value);
+        	num = num + val;
+        }
+
+		// Calculating the average of all stocks
+        let sum = 0;
+        	for(let i = 0; i <= rowMultiplications.length-1; i++){
+        		sum = sum + rowMultiplications[i];
+        	}
+
+        	var avg = sum/num;
+        	console.log(avg);
+
+        	document.getElementById("totalShare").innerHTML = num;
+        	document.getElementById("avgCost").innerHTML = avg;
+        });
+
+        
+	</script>
+
+
+	<div class="container" style="background-color: rgb(218, 219, 224);">
+		<div class="col" style="background-color:rgb(79, 106, 240); color: white;">Stock Average Calculator Results</div>
+		<div class="row">
+			<div class="col-6"><b>Total Shares</b></div>
+			<div class="col-6"><b>Average Cost</b></div>
+		</div>
+		<div class="row">
+			<div class="col-6" id="totalShare"></div>
+			<div class="col-6" id="avgCost"></div>
+		</div>
+	</div>
+
+<script src="../ClassJspider/MDB/js.bootstrap.js"></script>
+<script src="../ClassJspider/MDB/js.jquery.js"></script>
+<script src="../ClassJspider/MDB/js.popper.js"></script>
+<script src="../ClassJspider/MDB/js.mdb.js"></script>
+</body>
+</html>
